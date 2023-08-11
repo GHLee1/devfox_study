@@ -216,7 +216,7 @@ System.out.println(str3.equals(str4)); //true
 
 2.다중상속 : 부모가 여러개
 
-[https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fcgx4i5%2FbtrN4OZMlUj%2FHf0a1a0KzKQ2u5NEtzHgKk%2Fimg.png](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fcgx4i5%2FbtrN4OZMlUj%2FHf0a1a0KzKQ2u5NEtzHgKk%2Fimg.png)
+![img11](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fcgx4i5%2FbtrN4OZMlUj%2FHf0a1a0KzKQ2u5NEtzHgKk%2Fimg.png)
 
 자바에서 자식클래스의 부모가 2개가 올 수 없다.
 
