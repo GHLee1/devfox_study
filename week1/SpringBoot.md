@@ -74,11 +74,11 @@ Class B{
 
 ### 스프링 프로젝트 생성
 
-![Untitled](<%E1%84%89%E1%85%B3%E1%84%91%E1%85%B3%E1%84%85%E1%85%B5%E1%86%BC%20%E1%84%87%E1%85%AE%E1%84%90%E1%85%B3%20(Spring%20Boot)%20eabbc46102e345df87c31921f06be77e/Untitled.png>)
+![Untitled 1](https://github.com/GHLee1/devfox_study/assets/97584550/f2234b0a-a404-4feb-8920-72e32f54651c)
 
 JSP를 쓰려면 War파일로 생성해야함.
 
-![Untitled](<%E1%84%89%E1%85%B3%E1%84%91%E1%85%B3%E1%84%85%E1%85%B5%E1%86%BC%20%E1%84%87%E1%85%AE%E1%84%90%E1%85%B3%20(Spring%20Boot)%20eabbc46102e345df87c31921f06be77e/Untitled%201.png>)
+![Untitled 2](https://github.com/GHLee1/devfox_study/assets/97584550/e4fe4ded-af96-476a-8468-c2c92d0b4570)
 
 HTTP Status Code
 
@@ -102,7 +102,7 @@ HTTP Status Code
 
 -requestMapping은 HTTP방식을 가리지 않는다(GET,POST,PUT,DELETE)
 
-![Untitled](<%E1%84%89%E1%85%B3%E1%84%91%E1%85%B3%E1%84%85%E1%85%B5%E1%86%BC%20%E1%84%87%E1%85%AE%E1%84%90%E1%85%B3%20(Spring%20Boot)%20eabbc46102e345df87c31921f06be77e/Untitled%202.png>)
+![Untitled 3](https://github.com/GHLee1/devfox_study/assets/97584550/5115925e-8375-4686-80b9-831af5490364)
 
 -요청값은 배열로 받을 수 있다.
 
@@ -112,7 +112,7 @@ HTTP Status Code
 
 import org.slf4j.Logger;
 
-![Untitled](<%E1%84%89%E1%85%B3%E1%84%91%E1%85%B3%E1%84%85%E1%85%B5%E1%86%BC%20%E1%84%87%E1%85%AE%E1%84%90%E1%85%B3%20(Spring%20Boot)%20eabbc46102e345df87c31921f06be77e/Untitled%203.png>)
+![Untitled 4](https://github.com/GHLee1/devfox_study/assets/97584550/5360829b-5864-401d-9c3a-94e99723b57e)
 
 ### 경로변수(PathVariable)
 
@@ -122,7 +122,7 @@ ex) localhost:9000/users/user1 = localhost:9000/users?user_id=user1( ? 이후는
 
 ### @RequestParam
 
-![Untitled](<%E1%84%89%E1%85%B3%E1%84%91%E1%85%B3%E1%84%85%E1%85%B5%E1%86%BC%20%E1%84%87%E1%85%AE%E1%84%90%E1%85%B3%20(Spring%20Boot)%20eabbc46102e345df87c31921f06be77e/Untitled%204.png>)
+![Untitled](https://github.com/GHLee1/devfox_study/assets/97584550/8fdc3a20-5edc-4ab7-8acf-f779e09ca3f8)
 
 @RequestParam으로 요청 파라미터를 읽을 수 있다. 요청 파라미터의 key와 메소드의 변수명이 다르면 value or name속성을 지정하여 변수명을 맞추어야 한다.
 
