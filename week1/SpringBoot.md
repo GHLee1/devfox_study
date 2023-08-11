@@ -100,7 +100,7 @@ HTTP Status Code
 
 -requestMapping은 HTTP방식을 가리지 않는다(GET,POST,PUT,DELETE)
 
-![Untitled 3](https://user-images.githubusercontent.com/97584550/259926199-e4fe4ded-af96-476a-8468-c2c92d0b4570.png)
+![Untitled 2](https://user-images.githubusercontent.com/97584550/259926199-e4fe4ded-af96-476a-8468-c2c92d0b4570.png)
 
 -요청값은 배열로 받을 수 있다.
 
@@ -110,7 +110,7 @@ HTTP Status Code
 
 import org.slf4j.Logger;
 
-![Untitled 4](https://user-images.githubusercontent.com/97584550/259926202-5115925e-8375-4686-80b9-831af5490364.png)
+![Untitled 3](https://user-images.githubusercontent.com/97584550/259926202-5115925e-8375-4686-80b9-831af5490364.png)
 
 ### 경로변수(PathVariable)
 
@@ -119,7 +119,7 @@ ex) localhost:9000/users/user1 = localhost:9000/users?user_id=user1( ? 이후는
 ---
 
 ### @RequestParam
-!(https://user-images.githubusercontent.com/97584550/259926203-5360829b-5864-401d-9c3a-94e99723b57e.png)
+![Untitled 4](https://github.com/GHLee1/devfox_study/assets/97584550/5360829b-5864-401d-9c3a-94e99723b57e)
 
 
 @RequestParam으로 요청 파라미터를 읽을 수 있다. 요청 파라미터의 key와 메소드의 변수명이 다르면 value or name속성을 지정하여 변수명을 맞추어야 한다.
