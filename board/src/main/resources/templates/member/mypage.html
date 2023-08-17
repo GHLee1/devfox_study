@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>myPage</title>
+
+<link rel="stylesheet" href="/css/header.css" />
+<link rel="stylesheet" href="/css/list.css">
+</head>
+<body>
+	<div th:replace="fragments/header :: header"></div>
+	<div class="header-container">
+	<div id="board-container">
+		<h2 style="text-align: center">
+			<span th:text="${loginMember.getUsername()}"></span>님 안녕하세요
+		</h2>
+		<hr/>
+		<table class="board-table">
+						<thead>
+							<tr class="mainTitle">
+								<th scope="col" class="th-num">번호</th>
+								<th scope="col" class="th-title">제목</th>
+								<th scope="col" class="th-writer">글쓴이</th>
+								<th scope="col" class="th-date">날짜</th>
+								<th scope="col" class="th-hit">조회수</th>
+							</tr>
+						</thead>
+						<tbody>
+						<th:block  th:each="board, boardsStat: ${boards}" >
+							<tr th:if="${boards}" th:onclick="|location.href='@{/board/read(board_id=${board.board_id})}'|" style="cursor:pointer;" 
+										class="hover likeRanking">
+								<td  th:text="${boardsStat.count}"></td>
+								<th th:text="${board.title}"
+									id="title"></th>
+								<td th:text="${board.member_id}" class="center"></td>
+								<td
+									th:text="${#temporals.format(board.created_time, 'yyyy-MM-dd')}"></td>
+								<td th:text="${board.hit}"></td>
+							</tr>
+						</th:block>
+					
+					
+						<tr th:if="${boards.empty}">
+							<td class="color" colspan="6">글이 없습니다.</td>
+						</tr>
+						</tbody>
+
+					</table>
+
+	</div>
+	</div>
+</body>
+</html>

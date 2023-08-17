@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="headFragment">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+
+<body th:fragment="header">
+	<div id="main-container">
+		<header>
+			<a class="logo" href="/"> <img
+				src="http://www.devfox.co.jp/devfox/imgs/header/logo.png" alt="logo" />
+			</a>
+			<nav>
+				<div sec:authorize="isAnonymous()">
+					<a href="#">게시판</a> <a href="/member/login">로그인</a> <a
+						href="/member/join">회원가입</a>
+				</div>
+				<div sec:authorize="isAuthenticated()">
+					<a href="#">게시판</a> <a href="/member/myPage">마이페이지</a> <a
+						href="/member/logout">로그아웃</a>
+				</div>
+			</nav>
+		</header>
+	</div>
+</body>
+</th:block>
+</html>
