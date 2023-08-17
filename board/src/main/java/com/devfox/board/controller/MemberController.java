@@ -1,6 +1,7 @@
 package com.devfox.board.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,10 +26,12 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.devfox.board.config.UserInfo;
+import com.devfox.board.model.board.Board;
 import com.devfox.board.model.member.LoginForm;
 import com.devfox.board.model.member.Member;
 import com.devfox.board.model.member.MemberJoinForm;
 import com.devfox.board.repository.MemberMapper;
+import com.devfox.board.service.BoardService;
 import com.devfox.board.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -44,6 +47,10 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private final BoardService boardService;
+	
 	
 	 // 회원가입 페이지 이동
     @GetMapping("join")
@@ -101,30 +108,20 @@ public class MemberController {
     }
     
     @GetMapping("myPage")
-    public String myPage(Model model,@SessionAttribute(value="loginMember",required = false) Member loginMember) {
-    	model.addAttribute("loginMember",loginMember.getMember_id());
+    public String myPage(Model model,@AuthenticationPrincipal UserInfo userInfo) {
+    	if(userInfo == null) {
+    		return "redirect:/";
+    	}
+    	List<Board> boards = boardService.findBoardsByMemberId(userInfo.getUsername());
+    	if(userInfo !=null) {
+    		model.addAttribute("boards", boards);
+    		model.addAttribute("loginMember",userInfo);
+    	}
+
         return "member/mypage"  ;
     }
     
-    @GetMapping("updateMember")
-    public String updateMember(Model model,@SessionAttribute(value = "loginMember", required = false) Member loginMember) {
-    	
-        model.addAttribute("loginMember", loginMember);
-        return "member/updateMember";
-    }
-    
-    @PostMapping("updateMember")
-    public ResponseEntity<String> updateMember2(Model model
-    		,@RequestParam String name, @RequestParam String password, @RequestParam String phone_number
-    		,@SessionAttribute(value = "loginMember", required = false) Member loginMember) {
-    	
-    	loginMember.setPassword(password);
-    	loginMember.setName(name);
-    	
-        memberMapper.updateMember(loginMember);
-        
-        return ResponseEntity.ok("변경성공");
-    }
+   
     
     //중복체크
     @ResponseBody

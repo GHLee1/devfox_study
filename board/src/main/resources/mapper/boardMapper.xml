@@ -61,5 +61,10 @@
         delete from board where board_id = #{board_id}
     </delete>
     
+    <!-- /// 작성한 유저의 게시물//////////////////  -->
+    <select id="findBoardsByMemberId" resultType="board">
+        select *
+         from board where member_id = #{member_id} order by created_time desc
+    </select>
     
 </mapper>
