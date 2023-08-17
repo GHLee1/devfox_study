@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>게시글 읽기</title>
+<script th:inline="javascript">
+    //국제화
+                $(document).ready(function() {
+                      $('input[type="button"]').each(function() {
+                        $(this).val($(this).attr('value'));
+                      });
+                    });
+ </script>
+<link rel="stylesheet" href="/css/header.css">
+<link rel="stylesheet" href="/css/read.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<script th:inline="javascript">
+    
+      function writeReply() {
+        let board_id = [[${board.board_id}]];
+        let content = $("#reply").val();
+        // 리플 내용이 없으면 등록하지 않는다.
+        if (content === "") {
+          alert('내용이 없습니다.');
+          $("#reply").focus();
+          return;
+        }
+        $.ajax({
+          url: "/reply/" + board_id,
+          type: "post",
+          data: {
+            "content": content
+          },
+          success: function (data, success, xhr) {
+            getReplies();
+          },	
+          error: function (xhr, status, error) {
+            console.log(status);
+          }
+        });
+      }
+
+      function getReplies() {
+        let board_id = [[${board.board_id}]];
+        $.ajax({
+          url: "/reply/" + board_id,
+          success: function (data, success, xhr) {
+            showReplies(data);
+          },
+          error: function (xhr, status, error) {
+            console.log(status);
+          }
+        });
+      }
+      
+
+	
+      function showReplies(data) {
+        $("#replies").html("");
+        let str = "";
+        str += "<table class='reply-table'>";
+        str += "  <tr>";
+        str += "      <th>No.</th>";
+        str += "      <th>작성자.</th>";
+        str += "      <th>내용.</th>";
+        str += "      <th>작성일</th>";
+        str += "  </tr>";
+        if (data.length > 0) {
+          $(data).each(function(idx, obj) {
+            str += "<tr>";
+            str += "  <td>" + (idx + 1) + "</td>";
+            str += "  <td>" + obj.member_id + "</td>";
+            if (obj.writer == true) {
+              str += "  <td><input class='reply-input-btn' type='text' id='reply_" + obj.reply_id + "' value='" + obj.content + "'>";
+              //str += "<button type='button' class='reply-btn'  >작성</button>";
+              str += " <button type='button' class='reply-btn'  onclick=updateReply(" + obj.reply_id + ")>수정</button>";
+              str += "<button type='button' class='reply-btn'  onclick=removeReply(" + obj.reply_id + ")>삭제</button>";
+               //str += "<button class='board-button' type='button' value='수정' onclick='updateReply(" + obj.reply_id + ")'>";
+              //str += "<button class='board-button' type='button' value='삭제' onclick='removeReply(" + obj.reply_id + ")'>";
+            } else {
+            	str += "<td><input disabled='disabled' class='reply-input-btn not-login-reply' type='text'  id='reply_" + obj.reply_id + "'  value='"+obj.content+"'>";
+            }
+            str += "  </td>";
+            str += "  <td>" + obj.created_time + "</td>";
+            str += "</tr>";
+          });
+        } else {
+          str += "<tr>"
+          str += "<td colspan='4'>"+"등록된 리플이 없습니다."+"</td>"
+          str += "<tr>"
+        }
+        str += "</table>";
+        $("#replies").append(str);
+        checkLang();
+        
+      }
+
+      function updateReply(reply_id) {
+        let check = confirm('변경하시겠습니까?');
+        if (check) {
+          let board_id = [[${board.board_id}]];
+          let content = $("#reply_" + reply_id).val();
+          $.ajax({
+            url: "/reply/" + board_id + "/" + reply_id,
+            type: "put",
+            data: {
+              "content": content
+            },
+            success: function (data) {
+              getReplies();
+            },
+            error: function (xhr, status, error) {
+              console.log(status);
+            }
+          });
+        }
+      }
+
+      function removeReply(reply_id) {
+        let check = confirm("삭제하시겠습니까?");
+        if (check) {
+          let board_id = [[${board.board_id}]];
+          $.ajax({
+            url: "/reply/" + board_id + "/" + reply_id,
+            type: "delete",
+            success: function (data) {
+              getReplies();
+            },
+            error: function (xhr, status, error) {
+              console.log(status);
+            }
+          });
+        }
+      }
+
+      $(function () {
+        // 페이지가 로딩되면 getReplies() 함수를 자동으로 호출한다.
+        getReplies();
+        // 리플을 작성하고 엔터키를 입력하면 리플을 등록한다.
+        $("#reply").keydown(function(event){
+          if (event.originalEvent.code === "Enter") {
+            writeReply();
+          }
+        });
+      });
+      
+    </script>
+</head>
+<body>
+	<div th:replace="fragments/header :: header"></div>
+
+	<div class="read-container">
+
+
+		<div th:object="${board}" class="read-form">
+			
+			<h1 th:text="*{title}" id="title" ></h1>
+
+			<div class="form-nav">
+				<!--아이디 -->
+				<div>
+					<span th:text="*{member_id}"
+						style="font-size: 20px; font-weight: bold;"></span>
+					<!--아이디 바로 옆 날짜  -->
+					<span id="mySpan" th:text="${#temporals.format(board.created_time, 'yyyy-MM-dd HH:mm')}"></span>
+				</div>
+				
+			</div>
+
+			<hr style="margin: 10px 0;" />
+
+			<div id="contents"  th:utext="*{contents}" class="form-contents"></div>
+
+		</div>
+
+		<div style="margin-top: 20px;">
+			<!-- <input type="button" onclick="location.href='/board/list'"
+					value="목록으로"> -->
+			
+			<div th:if="${loginMember}">
+			<th:block
+				th:if="${loginMember.getUsername() == board.member_id}">
+				<input type="button"
+					th:onclick="|location.href='/board/update?board_id=${board.board_id}'|"
+					value="변경하기">
+				<input type="button"
+					th:onclick="|location.href='/board/delete?board_id=${board.board_id}'|"
+					value="삭제하기">
+			</th:block>
+			</div>
+		</div>
+
+		<div class="reply-container">
+			<div id="replies" class="reply-div"></div>
+
+			<th:block th:if="${loginMember}">
+			<input class="reply-input" id="reply" name="reply" type="text"
+				placeholder="댓글을 작성해주세요." >
+			<button type="button" class="reply-btn" onclick="writeReply()">댓글쓰기</button>
+			</th:block>
+		</div>
+
+
+
+
+	</div>
+
+
+
+</body>
+</html>

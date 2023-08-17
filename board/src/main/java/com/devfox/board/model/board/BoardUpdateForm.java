@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 public class BoardUpdateForm {
-	private Long review_id;
+	private Long board_id;
     private String member_id;
     
     @NotBlank
@@ -17,10 +17,7 @@ public class BoardUpdateForm {
     @NotBlank
     private String contents;
     private Long hit;
-    private Long review_like;
     private LocalDateTime created_time;
-    private boolean isFileRemoved;
-    private String review_place;
 
 }
 

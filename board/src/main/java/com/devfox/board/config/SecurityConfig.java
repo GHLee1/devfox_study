@@ -44,7 +44,7 @@ public class SecurityConfig {
 			// URL 별 권한접근 제어
 			.authorizeRequests()
 			.antMatchers("/", "/member/join", "/member/login", "/member/login-failed", "/member/logout",
-					"/member/idCheck").permitAll()
+					"/member/idCheck","/board/*","/reply/*").permitAll()
 			.antMatchers("/css/*", "/js/*", "/favioon.ioo", "/error").permitAll()
 			.antMatchers("/admin/**").hasAnyRole("ADMIN")
 			// 이외의 모든 경로는 인증을 받아서 접근 가능

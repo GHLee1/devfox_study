@@ -26,7 +26,6 @@ public class MemberService {
 		String rawPassword = member.getPassword();
 		String encPassword = passwordEncoder.encode(rawPassword);
 		member.setPassword(encPassword);
-//		memberRepository.saveMember(member);
 		memberMapper.saveMember(member);
 		
 	}

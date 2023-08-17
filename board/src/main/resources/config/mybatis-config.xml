@@ -5,8 +5,8 @@
 <configuration>
     <typeAliases>
         <typeAlias type="com.devfox.board.model.member.Member" alias="member"/>
-        
-       
+        <typeAlias type="com.devfox.board.model.board.Board" alias="board"/>
+       	<typeAlias type="com.devfox.board.model.reply.Reply" alias="reply"/>
         
     </typeAliases>
 </configuration>
