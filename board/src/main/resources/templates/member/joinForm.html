@@ -21,40 +21,23 @@
     		  //let form = $('#idForm');
     			let member_id = $("#member_id");
         		let password = $("#password");
-					let passwordCheck=$("#passwordCheck");
-					let name = $('#name'); 
-					let birth = $("#birth");
-					let now = new Date();
-        	let phone_number = $("#phone_number");
-        	let birthDate = new Date(birth.val());
-        	
+				let passwordCheck=$("#passwordCheck");
+				let name = $('#name'); 
        		if(idck==0){
-	            alert("[[#{alert.chchch}]]");
+	            alert("아이디 중복확인을 눌러주세요");
 	            return false;
 	        }
        		
-       		if(isEmpty(member_id,"[[#{alert.alertid}]]")) return;
-       		if(isEmpty(password,"[[#{alert.alertPassword}]]")) return;
-       		if(isEmpty(name,"[[#{alert.alertName}]]")) return;
+       		if(isEmpty(member_id,"아이디를 입력해주세요")) return;
+       		if(isEmpty(password,"비밀번호를 입력해주세요")) return;
+       		if(isEmpty(name,"이름을 입력해주세요")) return;
        		
        		//비밀번호 일치확인
        		if(password.val() != passwordCheck.val()){
-					alert("[[#{alert.alertPassword2}]]");
+					alert("비밀번호가 일치하지않습니다.");
 					password.focus();
        		return false;
        		}
-       		
-       		if(isEmpty(birth,"[[#{alert.alertbirth}]]")) return;
-       		//생년월일 체크
-       		if (now < birthDate) {
-        		alert("[[#{alert.alerttoday}]]");
-        		birth.focus();
-        		return;
-        	}
-       		
-       		if(isEmpty(phone_number,"[[#{alert.alertPhone}]]")) return;
-       		if(isEmpty(password,"[[#{alert.alertPassword}]]")) return;
-       		if(isEmpty(password,"[[#{alert.alertPassword}]]")) return;
        		
        		//submit
        		return true;

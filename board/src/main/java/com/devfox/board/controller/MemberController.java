@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,10 +24,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.devfox.board.config.UserInfo;
 import com.devfox.board.model.member.LoginForm;
 import com.devfox.board.model.member.Member;
 import com.devfox.board.model.member.MemberJoinForm;
 import com.devfox.board.repository.MemberMapper;
+import com.devfox.board.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +41,9 @@ public class MemberController {
 	
 	@Autowired
 	private MemberMapper memberMapper;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	 // 회원가입 페이지 이동
     @GetMapping("join")
@@ -70,19 +76,30 @@ public class MemberController {
 //            return "member/joinForm";
 //        }
         // MemberJoinForm 객체를 Member 타입으로 변환하여 데이터베이스에 저장한다.
-        memberMapper.saveMember(MemberJoinForm.toMember(joinForm));
+        //memberMapper.saveMember(MemberJoinForm.toMember(joinForm));
+        memberService.saveMember(MemberJoinForm.toMember(joinForm));
         //redirectAttributes.addFlashAttribute("alertMessage", messageSource.getMessage("alert.kaicon", null, LocaleContextHolder.getLocale()));
         // 로그인 페이지로 리다이렉트한다.
         return "redirect:/member/login";
     }
+    
+    
     // 로그인 페이지 이동
     @GetMapping("login")
-    public String loginForm(Model model) {
+    public String loginForm(@RequestParam(value="error", required = false) String error,
+    						@RequestParam(value="exception",required = false) String exception
+    						,Model model) {
         // member/loginForm.html 에 필드 셋팅을 위해 빈 LoginForm 객체를 생성하여 model 에 저장한다.
         model.addAttribute("loginForm", new LoginForm());
+        /* 에러와 예외를 모델에 담아 view resolve */
+		model.addAttribute("error", error);
+		model.addAttribute("exception", exception);
         // member/loginForm.html 페이지를 리턴한다.
+		log.info("error {}",exception);
         return "member/loginForm";
     }
+    
+    
 
     // 로그인 처리
     @PostMapping("login")
@@ -113,6 +130,19 @@ public class MemberController {
         // 메인 페이지로 리다이렉트 한다.
         return "redirect:" + redirectURL;
     }
+    
+    @GetMapping("login-success")
+    public String loginSuccess(@AuthenticationPrincipal UserInfo userInfo) {
+    	log.info("로그인성공");
+    	return "redirect:/";
+    }
+    
+    @GetMapping("login-failed")
+    public String loginFailed() {
+    	log.info("로그인실패");
+    	return "redirect:/";
+    }
+    
     // 로그아웃
     @GetMapping("logout")
     public String logout(HttpServletRequest request) {
@@ -165,5 +195,8 @@ public class MemberController {
  
         return map;
     }
+    
+    
+    
 	
 }
