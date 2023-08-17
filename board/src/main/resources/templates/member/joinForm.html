@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<link rel="stylesheet" href="/css/header.css" />
+<link rel="stylesheet" href="/css/joinForm.css" />
+<script>
+       let idck = 0;
+       function isEmpty(obj,msg){
+    	   if(obj.val().length==0){
+    		   alert(msg);
+    		   obj.focus();
+    		   return true;
+    	   }
+    	   return false;
+       }
+    	 function formCheck() {
+    		  //let form = $('#idForm');
+    			let member_id = $("#member_id");
+        		let password = $("#password");
+					let passwordCheck=$("#passwordCheck");
+					let name = $('#name'); 
+					let birth = $("#birth");
+					let now = new Date();
+        	let phone_number = $("#phone_number");
+        	let birthDate = new Date(birth.val());
+        	
+       		if(idck==0){
+	            alert("[[#{alert.chchch}]]");
+	            return false;
+	        }
+       		
+       		if(isEmpty(member_id,"[[#{alert.alertid}]]")) return;
+       		if(isEmpty(password,"[[#{alert.alertPassword}]]")) return;
+       		if(isEmpty(name,"[[#{alert.alertName}]]")) return;
+       		
+       		//비밀번호 일치확인
+       		if(password.val() != passwordCheck.val()){
+					alert("[[#{alert.alertPassword2}]]");
+					password.focus();
+       		return false;
+       		}
+       		
+       		if(isEmpty(birth,"[[#{alert.alertbirth}]]")) return;
+       		//생년월일 체크
+       		if (now < birthDate) {
+        		alert("[[#{alert.alerttoday}]]");
+        		birth.focus();
+        		return;
+        	}
+       		
+       		if(isEmpty(phone_number,"[[#{alert.alertPhone}]]")) return;
+       		if(isEmpty(password,"[[#{alert.alertPassword}]]")) return;
+       		if(isEmpty(password,"[[#{alert.alertPassword}]]")) return;
+       		
+       		//submit
+       		return true;
+    	}
+    	
+    	//아이디 체크여부 확인 (아이디 중복일 경우 = 0 , 중복이 아닐경우 = 1 )
+    	 
+    	 $(function() {
+    	     //idck 버튼을 클릭했을 때 
+    	     $("#idck").click(function() {
+    	         
+    	         //userid 를 param.
+    	         let member_id =  $("#member_id").val(); 
+    	         
+    	         $.ajax({
+    	             async: true,
+    	             type : 'POST',
+    	             data : member_id,
+    	             url : "/member/idCheck",
+    	             dataType : "json",
+    	             contentType: "application/json; charset=UTF-8",
+    	             success : function(data) {
+    	                 if (data.cnt > 0) {
+    	                     alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
+    	                     $("#member_id").focus();
+    	                 } else {
+    	                	 
+    	                		 alert("사용가능한 아이디입니다.");
+        	                     $("#password").focus();
+        	                     //아이디가 중복하지 않으면  idck = 1 
+        	                     idck = 1;
+    	                    
+    	                 } 
+    	             },
+    	             error : function(error) {
+    	                 alert("다시입력해주세요");
+    	             }
+    	         });
+    	     });
+    	 });
+    	  
+    	
+    </script>
+</head>
+<body>
+	<div th:replace="fragments/header :: header"></div>
+	<div id="join-container">
+		<form id="idForm" action="/member/join" method="post"
+			th:object="${joinForm}" onsubmit="return formCheck()">
+
+			<table>
+				<tr>
+					<td class="leftTd">아이디</td>
+					<td class="rightTd"><input type="text" th:field="*{member_id}">
+						<input class="butID" id="idck" type="button" th:value="중복확인">
+						<span class="error" th:errors="*{member_id}"></span></td>
+				</tr>
+				<tr>
+					<td class="leftTd">비밀번호</td>
+					<td class="rightTd"><input type="password"
+						th:field="*{password}"> <span class="error"
+						th:errors="*{password}"></span></td>
+				</tr>
+				<tr>
+					<td class="leftTd">비밀번호 확인</td>
+					<td class="rightTd"><input type="password" id="passwordCheck"></td>
+				</tr>
+				<tr>
+					<td class="leftTd">이름</td>
+					<td class="rightTd"><input type="text" th:field="*{name}">
+						<span class="error" th:errors="*{name}"></span></td>
+				</tr>
+			</table>
+			<div class="join-button">
+				<input class="btn-join" type="submit" value="회원가입"> <input
+					class="btn-cancel" type="reset" value="취소">
+
+			</div>
+
+		</form>
+	</div>
+</body>
+</html>
