@@ -18,5 +18,6 @@
 - 중복 로그인 방지와 같은 세션 처리는 redis로 작업
 - API 저장 DB의 경우, api 내 요소가 많아 설계 진행 중
 
+<img width="80%" src="https://github.com/GHLee1/devfox_study/week2/db.png"/>
 
 
