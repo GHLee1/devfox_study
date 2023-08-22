@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.devfox.board.config.UserInfo;
-import com.devfox.board.model.member.Member;
 import com.devfox.board.model.reply.Reply;
 import com.devfox.board.model.reply.ReplyDto;
 import com.devfox.board.repository.ReplyMapper;
@@ -32,7 +30,7 @@ public class ReplyRestController {
 	
 	private final ReplyMapper replyMapper;
 	
-	// 리플 등록
+	// コメントを登録
 	@PostMapping("{review_id}")
 	public ResponseEntity<String> writeReply(@PathVariable Long review_id,
 											 @ModelAttribute Reply reply,
@@ -40,13 +38,12 @@ public class ReplyRestController {
 		log.info("reply: {}", reply);
 		reply.setBoard_id(review_id);
 		reply.setMember_id(userInfo.getUsername());
-		
 		replyMapper.saveReply(reply);
 		
 		return ResponseEntity.ok("등록 성공");
 	}
 	
-	// 리플 읽기 (/reply/게시물아이디/리플아이디)
+	// リップル読み取り
 	@GetMapping("{review_id}/{reply_id}")
 	public ResponseEntity<Reply> findReply(@PathVariable Long review_id,
 										   @PathVariable Long reply_id) {
@@ -54,7 +51,7 @@ public class ReplyRestController {
 		return ResponseEntity.ok(reply);
 	}
 	
-	// 리플 목록
+	// リップのルリスト
 	@GetMapping("{review_id}")
 	public ResponseEntity<List<ReplyDto>> findReplies(@AuthenticationPrincipal UserInfo userInfo,
 												   	  @PathVariable Long review_id) {
@@ -64,7 +61,7 @@ public class ReplyRestController {
 	    if (replies != null && replies.size() > 0) {
 	        for (Reply reply : replies) {
 	            ReplyDto replyDto = Reply.toDto(reply);
-	            // 로그인하지 않은 사용자일 경우 writer를 false로 설정합니다.
+	            // ログインしていないユーザーの場合はwriterをfalseに設定します。
 	            if (userInfo == null || !reply.getMember_id().equals(userInfo.getUsername())) {
 	                replyDto.setWriter(false);
 	            } else {
@@ -77,12 +74,12 @@ public class ReplyRestController {
 	    return ResponseEntity.ok(replyDtos);
 	}
 		
-	// 리플 수정
+	// リップルの修正
 	@PutMapping("{review_id}/{reply_id}")
 	public ResponseEntity<Reply> updateReply(@AuthenticationPrincipal UserInfo userInfo,
 											 @PathVariable Long reply_id,
 											 @ModelAttribute Reply reply) {
-		// 수정 권한 확인
+		// 修正権限の確認
         Reply findReply = replyMapper.findReply(reply_id);
         if (findReply.getMember_id().equals(userInfo.getUsername())) {
             replyMapper.updateReply(reply);
@@ -91,11 +88,11 @@ public class ReplyRestController {
 		return ResponseEntity.ok(reply);
 	}
 	
-	// 리플 삭제
+	// リップルの削除
 	@DeleteMapping("{review_id}/{reply_id}")
 	public ResponseEntity<String> removeReply(@AuthenticationPrincipal UserInfo userInfo,
 											  @PathVariable Long reply_id) {
-		 // 삭제 권한 확인
+		 // 削除権限の確認
         Reply findReply = replyMapper.findReply(reply_id);
         if (findReply.getMember_id().equals(userInfo.getUsername())) {
             replyMapper.removeReply(reply_id);

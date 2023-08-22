@@ -13,8 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /*
- *  로그인 폼에서 아이디와 패스워드를 입력하고 로그인 요청을 하면 UserDetailsService의
- *  loadUserByUsername 메소드를 자동으로 호출한다.
+ *  ログインフォームでIDとパスワードを入力してログインリクエストをすると、
+ *  UserDetailsServiceのloadUserByUsernameメソッドを自動的に呼び出します。
  * */
 @Service
 @RequiredArgsConstructor

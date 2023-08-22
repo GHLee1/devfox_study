@@ -89,12 +89,11 @@
 
 		<p>
 		<div id="navigator" class="pageNumber" >
-			<!-- 이전 그룹이 없을 경우 보여주지 않음 -->
+			<!-- 前のグループがない場合は表示しない -->
 			<th:block th:if="${navi.currentPage - navi.pagePerGroup > 0}">
 				<a
 					th:href="@{/(page=${navi.currentPage - navi.pagePerGroup}, searchText=${searchText})}" style="color:black"><<</a>&nbsp;&nbsp;
     		</th:block>
-			<!-- 이전 페이지가 없을 경우 보여주지 않음 -->
 			<th:block th:if="${navi.currentPage - 1 > 0}">
 				<a
 					th:href="@{/(page=${navi.currentPage - 1}, searchText=${searchText})}" style="color:black"><</a>&nbsp;&nbsp;
@@ -109,12 +108,11 @@
       		</th:block>
 			</th:block>
 
-			<!-- 다음 페이지가 없을 경우 보여주지 않음 -->
+			<!-- 次のページがない場合は表示しない -->
 			<th:block th:if="${navi.currentPage < navi.totalPageCount}">
 				<a
 					th:href="@{/(page=${navi.currentPage + 1}, searchText=${searchText})}" style="color:black">></a>&nbsp;&nbsp;
     		</th:block>
-			<!-- 다음 그룹이 없을 경우 보여주지 않음 -->
 			<th:block
 				th:if="${navi.currentPage + navi.pagePerGroup < navi.totalPageCount}">
 				<a

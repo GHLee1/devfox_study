@@ -10,20 +10,18 @@ import com.devfox.board.model.board.Board;
 @Mapper
 public interface BoardMapper {
 	
-	
-	 	  //게시글 저장
+	 	  //　投稿の保存
 		  void saveBoard(Board board); 
-		  // 전체 게시글 갯수 
+		  // 全体の投稿数 
 		  int getTotal(String searchText);
-		  // 전체 게시글 검색 
+		  // 全体の投稿数を探し 
 	 	  List<Board> findBoards(String searchText, RowBounds rowBounds); 
-	 	  // 게시글 아이디로 검색 
+	 	  // アイディーを探し 
 	 	  Board findBoard(Long board_id); 
-	 	  // 게시글 수정 
+	 	  // 投稿の修正 
 	 	  void updateBoard(Board updateReview); 
-	 	  // 게시글 삭제 
+	 	  // 投稿の削除 
 	 	  void removeBoard(Long board_id);
-		  // Member ID로 작성한 글 찾기 
+		  // 私の全体の投稿数を探し 
 	 	  List<Board> findBoardsByMemberId(String member_id);
-		  		  
 }

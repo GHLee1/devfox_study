@@ -3,14 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>게시글 읽기</title>
-<script th:inline="javascript">
-    //국제화
-                $(document).ready(function() {
-                      $('input[type="button"]').each(function() {
-                        $(this).val($(this).attr('value'));
-                      });
-                    });
- </script>
 <link rel="stylesheet" href="/css/header.css">
 <link rel="stylesheet" href="/css/read.css">
 <script
@@ -21,7 +13,7 @@
       function writeReply() {
         let board_id = [[${board.board_id}]];
         let content = $("#reply").val();
-        // 리플 내용이 없으면 등록하지 않는다.
+        // リップル内容がなければ登録しない。
         if (content === "") {
           alert('내용이 없습니다.');
           $("#reply").focus();
@@ -74,11 +66,8 @@
             str += "  <td>" + obj.member_id + "</td>";
             if (obj.writer == true) {
               str += "  <td><input class='reply-input-btn' type='text' id='reply_" + obj.reply_id + "' value='" + obj.content + "'>";
-              //str += "<button type='button' class='reply-btn'  >작성</button>";
               str += " <button type='button' class='reply-btn'  onclick=updateReply(" + obj.reply_id + ")>수정</button>";
               str += "<button type='button' class='reply-btn'  onclick=removeReply(" + obj.reply_id + ")>삭제</button>";
-               //str += "<button class='board-button' type='button' value='수정' onclick='updateReply(" + obj.reply_id + ")'>";
-              //str += "<button class='board-button' type='button' value='삭제' onclick='removeReply(" + obj.reply_id + ")'>";
             } else {
             	str += "<td><input disabled='disabled' class='reply-input-btn not-login-reply' type='text'  id='reply_" + obj.reply_id + "'  value='"+obj.content+"'>";
             }
@@ -136,9 +125,9 @@
       }
 
       $(function () {
-        // 페이지가 로딩되면 getReplies() 함수를 자동으로 호출한다.
+        // ページが読み込まれると、getReplies() 関数を自動的に呼び出します。
         getReplies();
-        // 리플을 작성하고 엔터키를 입력하면 리플을 등록한다.
+        // リップルを作成し、Enterキーを入力するとリップルを登録する。
         $("#reply").keydown(function(event){
           if (event.originalEvent.code === "Enter") {
             writeReply();
@@ -159,11 +148,9 @@
 			<h1 th:text="*{title}" id="title" ></h1>
 
 			<div class="form-nav">
-				<!--아이디 -->
 				<div>
 					<span th:text="*{member_id}"
 						style="font-size: 20px; font-weight: bold;"></span>
-					<!--아이디 바로 옆 날짜  -->
 					<span id="mySpan" th:text="${#temporals.format(board.created_time, 'yyyy-MM-dd HH:mm')}"></span>
 				</div>
 				
@@ -176,8 +163,6 @@
 		</div>
 
 		<div style="margin-top: 20px;">
-			<!-- <input type="button" onclick="location.href='/board/list'"
-					value="목록으로"> -->
 			
 			<div th:if="${loginMember}">
 			<th:block
