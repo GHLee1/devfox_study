@@ -4,49 +4,47 @@ import lombok.Data;
 
 @Data
 public class PageNavigator {
-    //페이지 관련 정보
-    private int countPerPage;		//페이지당 글목록 수
-    private int pagePerGroup;		//그룹당 페이지 수
-    private int currentPage;		//현재 페이지 (최근 글이 1부터 시작)
-    private int totalRecordsCount;	//전체 글 수
-    private int totalPageCount;		//전체 페이지 수
-    private int currentGroup;		//현재 그룹 (최근 그룹이 0부터 시작)
-    private int startPageGroup;		//현재 그룹의 첫 페이지
-    private int endPageGroup;		//현재 그룹의 마지막 페이지
-    private int startRecord;		//전체 레코드 중 현재 페이지 첫 글의 위치 (0부터 시작)
+    // ページ関連フィールド
+    private int countPerPage;		// ページあたりの記事リスト数
+    private int pagePerGroup;		// グループあたりのページ数
+    private int currentPage;		// 現在のページ
+    private int totalRecordsCount;	// 全体記事数
+    private int totalPageCount;		// 全ページ数
+    private int currentGroup;		// 現在のグループ
+    private int startPageGroup;		// 現在のグループのトップページ
+    private int endPageGroup;		// 現在のグループの最終ページ
+    private int startRecord;		// 全レコードのうち、現在のページの最初の記事の位置(0から始まる)
 
     /*
-     * 생성자
+     * コンストラクタ
      */
     public PageNavigator(int countPerPage, int pagePerGroup, int currentPage, int totalRecordsCount) {
-        //페이지당 글 수, 그룹당 페이지 수, 현재 페이지, 전체 글 수를 전달받음
         this.countPerPage = countPerPage;
         this.pagePerGroup = pagePerGroup;
         this.totalRecordsCount = totalRecordsCount;
 
-        //전체 페이지 수
+        // 全ページ数
         totalPageCount = (totalRecordsCount + countPerPage - 1) / countPerPage;
 
-        //전달된 현재 페이지가 1보다 작으면 현재페이지를 1페이지로 지정
+        // 渡された現在のページが1より小さい場合、現在のページを1ページに指定します。
         if (currentPage < 1) currentPage = 1;
-        //전달된 현재 페이지가 마지막 페이지보다 크면 현재페이지를 마지막 페이지로 지정
+        // 渡された現在のページが最後のページより大きい場合、現在のページを最後のページに指定します。
         if (currentPage > totalPageCount) currentPage = totalPageCount;
-
         this.currentPage = currentPage;
 
-        //현재 그룹
+        // 現在のグループ
         currentGroup = (currentPage - 1) / pagePerGroup;
 
-        //현재 그룹의 첫 페이지
+        // 現在のグループのトップページ
         startPageGroup = currentGroup * pagePerGroup + 1;
-        //현재 그룹의 첫 페이지가 1보다 작으면 1로 처리
+        // 現在のグループの最初のページが1より小さい場合は1として処理します。
         startPageGroup = startPageGroup < 1 ? 1 : startPageGroup;
-        //현재 그룹의 마지막 페이지
+        // 現在のグループの最終ページ
         endPageGroup = startPageGroup + pagePerGroup - 1;
-        //현재 그룹의 마지막 페이지가 전체 페이지 수보다 작으면 전체페이지 수를 마지막으로.
+        // 現在のグループの最後のページが全体のページ数より小さい場合は、全体のページ数を最後に。
         endPageGroup = endPageGroup < totalPageCount ? endPageGroup : totalPageCount;
 
-        //전체 레코드 중 현재 페이지 첫 글의 위치
+        // 全レコードのうち、現在のページの最初の記事の位置
         startRecord = (currentPage - 1) * countPerPage;
     }
 }

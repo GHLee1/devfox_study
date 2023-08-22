@@ -24,23 +24,19 @@ public class BoardService {
     }
 
     public List<Board> findboards(String searchText, int startRecord, int countPerPage) {
-        // 전체 검색 결과 중 시작 위치와 갯수
+        // 全検索結果のうち開始位置と数
         RowBounds rowBounds = new RowBounds(startRecord, countPerPage);
         return boardMapper.findBoards(searchText, rowBounds);
     }
-
-    
     public Board findboard(Long board_id) {
         return boardMapper.findBoard(board_id);
     }
-
     public Board readboard(Long board_id) {
     	Board board = findboard(board_id);
     	board.addHit();
         updateboard(board);
         return board;
     }
-
     @Transactional
     public void updateboard(Board updateboard) {
         if (updateboard != null) {
@@ -48,7 +44,6 @@ public class BoardService {
             boardMapper.updateBoard(updateboard);
         }
     }
-
     @Transactional
     public void removeboard(Long board_id) {
         boardMapper.removeBoard(board_id);	
