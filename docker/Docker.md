@@ -53,13 +53,13 @@ DHCP지원
 
 포트포워딩은 포트를 전달해 주는 것
 
-![Untitled](Docker%20ca61f7ceff924f1fabe6a9acb66a3029/Untitled.png)
+![Untitled](https://user-images.githubusercontent.com/97584550/271455827-2a2e9afc-6c4b-4bcf-90d9-c89f43905421.png)
 
 - ssh설정(원격로그인)
     - apt-get update && apt-get install -y openssh-server curl vim tree
 - Xshell로 로그인구성
 
-![Untitled](Docker%20ca61f7ceff924f1fabe6a9acb66a3029/Untitled%201.png)
+![Untitled1](https://user-images.githubusercontent.com/97584550/271455821-6d7c97e2-50c0-4a2c-bd68-2e16e6c18fcd.png)
 
 ```jsx
 **docker desktop cmd명령어**
